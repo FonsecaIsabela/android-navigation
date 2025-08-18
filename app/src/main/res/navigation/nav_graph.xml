@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/listaProdutos">
+
+    <fragment
+        android:id="@+id/listaProdutos"
+        android:name="br.com.alura.aluraesporte.ui.fragment.ListaProdutosFragment"
+        android:label="Lista de Produtos"
+        tools:layout="@layout/lista_produtos" >
+        <action
+            android:id="@+id/action_listaProdutos_to_detalhesProduto"
+            app:destination="@id/detalhesProduto"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/detalhesProduto"
+        android:name="br.com.alura.aluraesporte.ui.fragment.DetalhesProdutoFragment"
+        android:label="Detalhes do produto"
+        tools:layout="@layout/detalhes_produto">
+        <action
+            android:id="@+id/action_detalhesProduto_to_pagamento"
+            app:destination="@id/pagamento"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="produtoId"
+            app:argType="long" />
+    </fragment>
+    <fragment
+        android:id="@+id/pagamento"
+        android:name="br.com.alura.aluraesporte.ui.fragment.PagamentoFragment"
+        android:label="Pagamento"
+        tools:layout="@layout/pagamento" >
+        <action
+            android:id="@+id/action_pagamento_to_listaProdutos"
+            app:destination="@id/listaProdutos"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <argument
+            android:name="produtoId"
+            app:argType="long" />
+    </fragment>
+
+</navigation>
