@@ -4,28 +4,32 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import br.com.alura.aluraesporte.databinding.DetalhesProdutoBinding
 import br.com.alura.aluraesporte.extensions.formatParaMoedaBrasileira
+import br.com.alura.aluraesporte.ui.viewmodel.ComponentesVisuais
 import br.com.alura.aluraesporte.ui.viewmodel.DetalhesProdutoViewModel
+import br.com.alura.aluraesporte.ui.viewmodel.EstadoAppViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 
-class DetalhesProdutoFragment : Fragment() {
+class DetalhesProdutoFragment : BaseFragment() {
 
     private val argumentos by navArgs<DetalhesProdutoFragmentArgs>()
 
     private val produtoId by lazy {
         argumentos.produtoId
     }
-    private val viewModel: DetalhesProdutoViewModel by viewModel { parametersOf(produtoId) }
-    private val controlador by lazy { findNavController() }
 
     private var _binding: DetalhesProdutoBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: DetalhesProdutoViewModel by viewModel { parametersOf(produtoId) }
+    private val estadoAppViewModel: EstadoAppViewModel by sharedViewModel()
+    private val controlador by lazy { findNavController() }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +42,7 @@ class DetalhesProdutoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        estadoAppViewModel.temComponentes = ComponentesVisuais(appBar = true)
         buscaProduto()
         configuraBotaoComprar()
     }
@@ -68,9 +73,5 @@ class DetalhesProdutoFragment : Fragment() {
                 binding.detalhesProdutoPreco.text = produto.preco.formatParaMoedaBrasileira()
             }
         })
-    }
-
-    companion object {
-        private const val ID_PRODUTO_INVALIDO = "ID do produto inválido"
     }
 }
